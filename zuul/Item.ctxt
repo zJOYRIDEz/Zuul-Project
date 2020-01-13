@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.target=Item
+comment1.params=itemDescription\ itemWeight
+comment1.target=Item(java.lang.String,\ int)
+comment1.text=\r\n\ Maak\ een\ nieuwe\ item\ met\ een\ description\ en\ weight\r\n
+numComments=2

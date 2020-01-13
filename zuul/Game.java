@@ -22,6 +22,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
+    private Item item;
         
     /**
      * Create the game and initialise its internal map.
@@ -29,9 +30,17 @@ public class Game
     public Game() 
     {
         createRooms();
+        createItems();
         parser = new Parser();
     }
-
+    
+        private void createItems()
+    {
+        Item ironSword;
+        
+        ironSword = new Item("A standard iron sword", 1500);
+    }
+    
     /**
      * Create all the rooms and link their exits together.
      */
@@ -68,6 +77,8 @@ public class Game
         
         currentRoom = firstRoom;  // start game in the first room
     }
+    
+
 
     /**
      *  Main play routine.  Loops until end of play.
@@ -98,7 +109,6 @@ public class Game
         System.out.println("Type 'help' if you need help.");
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
-        System.out.println();
     }
 
     /**
