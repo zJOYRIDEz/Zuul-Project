@@ -19,7 +19,6 @@ import java.util.Iterator;
 public class Room 
 {
     private String description;
-    private Item i;
     private HashMap<String, Room> exits;
     private HashMap<Item, Room> items;
     /**
@@ -41,11 +40,17 @@ public class Room
         exits.put(direction, neighbor);
     }
     
+    /**
+     * Define the item and where it is on the map
+     */
     public void setItem(Item item, Room container)
     {
         items.put(item, container);
     }
     
+    /**
+     * Get the information about an item.
+     */
     public String getItem()
     {
         String itemString = null;
@@ -56,7 +61,7 @@ public class Room
         }
         return itemString;
     }
-
+   
     /**
      * @return The description of the room.
      */
@@ -90,5 +95,4 @@ public class Room
         }
         return returnString;
     }
-    
 }

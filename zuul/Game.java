@@ -1,7 +1,4 @@
 import java.util.HashMap;
-import java.util.Set;
-import java.util.List;
-import java.util.ArrayList;
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -21,50 +18,50 @@ import java.util.ArrayList;
 
 public class Game 
 {
-    private Parser parser;
-    private Room currentRoom;
-    private Item item;
-        
+   private Parser parser;
+   private Room currentRoom;
+   private Item item;
     /**
      * Create the game and initialise its internal map.
      */
-    public Game() 
-    {
-        createRooms();
-        parser = new Parser();
-    }
+   public Game() 
+   {
+       createRooms();
+       parser = new Parser();
+   }
     
     /**
      * Create all the rooms and link their exits together. Also create items
      */
-    private void createRooms()
-    {
-        Room jail, darkHallway;
-        Item brassKey;
-        
-        //create the items
-        brassKey = new Item("A brass key", 500);
-        
-        // create the rooms
-        jail = new Room("in a dark room, the air heavy with the stink of sewage");
-        darkHallway = new Room("in a dark hallway, dimly lit by torches");
-        
-        // initialise room exits
-        jail.setExit("north", darkHallway);
-        
-        // initialise room items
-        jail.setItem(brassKey, jail);
-        
-        currentRoom = jail;  // start game in the first room
-    }
+   private void createRooms()
+   {
+       Room darkRoom, darkHallway, diningRoom;
+       Item ironSword;
+    
+       //create the items
+       ironSword = new Item("Iron Sword", "A standard sword made of iron, it looks like it could've been used by a soldier", 1500);
+   
+       // create the rooms
+       darkRoom = new Room("in a dark room, the air heavy with the stink of sewage");
+       darkHallway = new Room("in a dark hallway, dimly lit by torches");
+       diningRoom = new Room("in what appears to be some sort of dining room, as you hear footsteps approaching you scramble to find a hiding spot."); 
+      
+       // initialise room exits
+       darkRoom.setExit("north", darkHallway);
+       darkHallway.setExit("north", diningRoom);
+       // initialise room items
+       darkRoom.setItem(ironSword, darkRoom);
+      
+       currentRoom = darkRoom;  // start game in the first room
+   }
     
 
 
     /**
      *  Main play routine.  Loops until end of play.
      */
-    public void play() 
-    {            
+   public void play() 
+   {            
         printWelcome();
 
         // Enter the main command loop.  Here we repeatedly read commands and
@@ -76,7 +73,7 @@ public class Game
             finished = processCommand(command);
         }
         System.out.println("Thank you for playing.  Good bye.");
-    }
+   }
 
     /**
      * Print out the opening message for the player.
@@ -89,15 +86,15 @@ public class Game
         System.out.println("Type 'help' if you need help.");
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
-    }
+   }
 
     /**
      * Given a command, process (that is: execute) the command.
      * @param command The command to be processed.
      * @return true If the command ends the game, false otherwise.
      */
-    private boolean processCommand(Command command) 
-    {
+   private boolean processCommand(Command command) 
+   {
         boolean wantToQuit = false;
 
         if(command.isUnknown()) {
@@ -119,11 +116,11 @@ public class Game
             look();
         }
         else if (commandWord.equals("pickUp")) {
-            pickUp();
+            pickUp(command);
         }
 
         return wantToQuit;
-    }
+   }
 
     // implementations of user commands:
 
@@ -132,21 +129,21 @@ public class Game
      * Here we print some stupid, cryptic message and a list of the 
      * command words.
      */
-    private void printHelp() 
-    {
+   private void printHelp() 
+   {
         System.out.println("You are lost. You are alone. You wander");
         System.out.println("around at the university.");
         System.out.println();
         System.out.println("Your command words are:");
         parser.showCommands();
-    }
+   }
 
     /** 
      * Try to go in one direction. If there is an exit, enter
      * the new room, otherwise print an error message.
      */
-    private void goRoom(Command command) 
-    {
+   private void goRoom(Command command) 
+   {
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
             System.out.println("Go where?");
@@ -165,15 +162,15 @@ public class Game
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
         }
-    }
+   }
 
     /** 
      * "Quit" was entered. Check the rest of the command to see
      * whether we really quit the game.
      * @return true, if this command quits the game, false otherwise.
      */
-    private boolean quit(Command command) 
-    {
+   private boolean quit(Command command) 
+   {
         if(command.hasSecondWord()) {
             System.out.println("Quit what?");
             return false;
@@ -181,10 +178,10 @@ public class Game
         else {
             return true;  // signal that we want to quit
         }
-    }
+   }
     
-    private void look()
-    {
+   private void look()
+   {
         System.out.println(currentRoom.getLongDescription());
         if(currentRoom.getItem() != null)
         {
@@ -193,10 +190,16 @@ public class Game
         } else {
             System.out.println("This room does not contain an item.");
         }
-    }
+   }
     
-    private void pickUp()
-    {
-        System.out.println("You have picked up the item.");
-    }
+   private void pickUp(Command command)
+   {
+        if(currentRoom.getItem() != null)
+        {
+            System.out.println("You have picked up the item.");
+            System.out.println(currentRoom.getItem() + " has been added to your inventory.");
+        } else {
+            System.out.println("This room does not contain an item.");
+        }
+   }
 }

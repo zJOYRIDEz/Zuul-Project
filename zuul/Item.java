@@ -5,14 +5,16 @@ import java.util.ArrayList;
 
 public class Item
 {
+    private String itemName;
     private String itemDescription;
     private int weight;
     
     /**
      * Maak een nieuwe item met een description en weight
      */
-    public Item(String itemDescription, int itemWeight)
-    {
+    public Item(String itemName, String itemDescription, int itemWeight)
+    {   
+        this.itemName = itemName;
         this.itemDescription = itemDescription;
         weight = itemWeight;
     }
@@ -29,6 +31,6 @@ public class Item
     
     public String toString()
     {
-        return "Item: " + itemDescription + " Weight: " + weight;
+        return "Item: " + itemName + "\n" + "Description: " + itemDescription + "\n" + "Weight: " + weight;
     }
 }
