@@ -1,6 +1,7 @@
 import java.util.HashMap;
 import java.util.Set;
-
+import java.util.List;
+import java.util.ArrayList;
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -30,52 +31,31 @@ public class Game
     public Game() 
     {
         createRooms();
-        createItems();
         parser = new Parser();
     }
     
-        private void createItems()
-    {
-        Item ironSword;
-        
-        ironSword = new Item("A standard iron sword", 1500);
-    }
-    
     /**
-     * Create all the rooms and link their exits together.
+     * Create all the rooms and link their exits together. Also create items
      */
     private void createRooms()
     {
-        Room firstRoom, northRoom, eastRoom, southRoom, westRoom, upRoom, downRoom;
-      
+        Room jail, darkHallway;
+        Item brassKey;
+        
+        //create the items
+        brassKey = new Item("A brass key", 500);
+        
         // create the rooms
-        firstRoom = new Room("in the first room");
-        northRoom = new Room("in the room in the north");
-        eastRoom = new Room("in the room in the east");
-        southRoom = new Room("in the room in the south");
-        westRoom = new Room("in the room in the west");
-        upRoom = new Room("in the room above");
-        downRoom = new Room("in the room below");
+        jail = new Room("in a dark room, the air heavy with the stink of sewage");
+        darkHallway = new Room("in a dark hallway, dimly lit by torches");
         
         // initialise room exits
-        firstRoom.setExit("north", northRoom);
-        firstRoom.setExit("east", eastRoom);
-        firstRoom.setExit("south", southRoom);
-        firstRoom.setExit("west", westRoom);
-        firstRoom.setExit("up", upRoom);
-        firstRoom.setExit("down", downRoom);
+        jail.setExit("north", darkHallway);
         
-        eastRoom.setExit("west", firstRoom);
+        // initialise room items
+        jail.setItem(brassKey, jail);
         
-        southRoom.setExit("north", firstRoom);
-        
-        westRoom.setExit("east", firstRoom);
-        
-        upRoom.setExit("down", firstRoom);
-        
-        downRoom.setExit("up", firstRoom);
-        
-        currentRoom = firstRoom;  // start game in the first room
+        currentRoom = jail;  // start game in the first room
     }
     
 
@@ -206,10 +186,17 @@ public class Game
     private void look()
     {
         System.out.println(currentRoom.getLongDescription());
+        if(currentRoom.getItem() != null)
+        {
+            System.out.println("This room contains an item.");
+            System.out.println(currentRoom.getItem());
+        } else {
+            System.out.println("This room does not contain an item.");
+        }
     }
     
     private void pickUp()
     {
-        System.out.println("You have picked up the item!");
+        System.out.println("You have picked up the item.");
     }
 }

@@ -1,8 +1,7 @@
 import java.util.HashMap;
 import java.util.Set;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Collections;
+import java.util.Iterator;
 /**
  * Class Room - a room in an adventure game.
  *
@@ -20,8 +19,9 @@ import java.util.Collections;
 public class Room 
 {
     private String description;
+    private Item i;
     private HashMap<String, Room> exits;
-    private List<Item> items = new ArrayList<Item>();
+    private HashMap<Item, Room> items;
     /**
      * Create a room
      */
@@ -29,18 +29,9 @@ public class Room
     {
         this.description = description;
         exits = new HashMap<>();
+        items = new HashMap<>();
     }
     
-    public void addItem(Item item)
-    {
-        items.add(item);
-    }
-    
-    public List<Item> getItems()
-    {
-        return Collections.unmodifiableList(items);
-    }
-
     /**
      * Define the exits of this room.  Every direction either leads
      * to another room or is null (no exit there).
@@ -50,6 +41,21 @@ public class Room
         exits.put(direction, neighbor);
     }
     
+    public void setItem(Item item, Room container)
+    {
+        items.put(item, container);
+    }
+    
+    public String getItem()
+    {
+        String itemString = null;
+        Set<Item> keys = items.keySet();
+        for(Item items : keys)
+        {
+            itemString =items + " ";
+        }
+        return itemString;
+    }
 
     /**
      * @return The description of the room.
