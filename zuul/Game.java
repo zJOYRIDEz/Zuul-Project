@@ -1,6 +1,4 @@
-import java.util.HashMap;
-import java.util.Set;
-
+import java.util.*;
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -19,55 +17,58 @@ import java.util.Set;
  */
 
 public class Game 
-{
+    {
     private Parser parser;
+    private Room previousRoom;
+    private Stack<Room> roomHistory;
     private Room currentRoom;
-        
+    private Item item;
     /**
      * Create the game and initialise its internal map.
      */
     public Game() 
     {
-        createRooms();
-        parser = new Parser();
+       createRooms();
+       parser = new Parser();
+       roomHistory =  new Stack<Room>();
     }
-
+    
     /**
-     * Create all the rooms and link their exits together.
+     * Create all the rooms and link their exits together. Also create items
      */
     private void createRooms()
     {
-        Room firstRoom, northRoom, eastRoom, southRoom, westRoom, upRoom, downRoom;
-      
-        // create the rooms
-        firstRoom = new Room("in the first room");
-        northRoom = new Room("in the room in the north");
-        eastRoom = new Room("in the room in the east");
-        southRoom = new Room("in the room in the south");
-        westRoom = new Room("in the room in the west");
-        upRoom = new Room("in the room above");
-        downRoom = new Room("in the room below");
-        
-        // initialise room exits
-        firstRoom.setExit("north", northRoom);
-        firstRoom.setExit("east", eastRoom);
-        firstRoom.setExit("south", southRoom);
-        firstRoom.setExit("west", westRoom);
-        firstRoom.setExit("up", upRoom);
-        firstRoom.setExit("down", downRoom);
-        
-        eastRoom.setExit("west", firstRoom);
-        
-        southRoom.setExit("north", firstRoom);
-        
-        westRoom.setExit("east", firstRoom);
-        
-        upRoom.setExit("down", firstRoom);
-        
-        downRoom.setExit("up", firstRoom);
-        
-        currentRoom = firstRoom;  // start game in the first room
+       Room darkRoom, darkHallway, diningRoom, basement;
+       Item ironSword, woodenShield;
+    
+       //create the items
+       ironSword = new Item("Iron Sword", "A standard sword made of iron, it looks like it could've been used by a soldier", 1500, 15);
+       woodenShield = new Item("Wooden Shield", "A worn and almost rotten wooden shield", 2000, 5);
+       // create the rooms
+       darkRoom = new Room("in a dark room, the air heavy with the stink of sewage");
+       darkHallway = new Room("in a dark hallway, dimly lit by torches");
+       diningRoom = new Room("in what appears to be some sort of dining room, as you hear footsteps approaching you scramble to find a hiding spot."); 
+       basement = new Room("placeholder text");
+       
+       // initialise room exits
+       darkRoom.setExit("north", darkHallway);
+       darkRoom.setExit("carpet" , basement);
+       
+       darkHallway.setExit("north", diningRoom);
+       darkHallway.setExit("south", darkRoom);
+       
+       diningRoom.setExit("south", darkHallway);
+       
+       basement.setExit("up", darkRoom);
+       // initialise room items
+       darkRoom.setItem(ironSword, darkRoom);
+       darkRoom.setItem(woodenShield, darkRoom);
+       
+       previousRoom = darkRoom; // sets the previous room
+       currentRoom = darkRoom;  // start game in the first room
     }
+    
+
 
     /**
      *  Main play routine.  Loops until end of play.
@@ -92,13 +93,12 @@ public class Game
      */
     private void printWelcome()
     {
-        System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
-        System.out.println("Type 'help' if you need help.");
-        System.out.println();
-        System.out.println(currentRoom.getLongDescription());
-        System.out.println();
+       System.out.println();
+       System.out.println("Welcome to the World of Zuul!");
+       System.out.println("World of Zuul is a new, incredibly boring adventure game.");
+       System.out.println("Type 'help' if you need help.");
+       System.out.println();
+       System.out.println(currentRoom.getLongDescription());
     }
 
     /**
@@ -130,8 +130,10 @@ public class Game
         }
         else if (commandWord.equals("pickUp")) {
             pickUp();
+        } else if (commandWord.equals("back")) {
+            goBack();
         }
-
+        
         return wantToQuit;
     }
 
@@ -149,7 +151,7 @@ public class Game
         System.out.println();
         System.out.println("Your command words are:");
         parser.showCommands();
-    }
+    }    
 
     /** 
      * Try to go in one direction. If there is an exit, enter
@@ -172,6 +174,7 @@ public class Game
         if (nextRoom == null) {
             System.out.println("There is no door!");
         } else {
+            roomHistory.push(currentRoom);
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
         }
@@ -193,13 +196,39 @@ public class Game
         }
     }
     
-    private void look()
-    {
+   private void look()
+   {
         System.out.println(currentRoom.getLongDescription());
-    }
+        if(currentRoom.getItem() != null)
+        {
+            for(int i = 1; i < 2; i++)
+            {
+            System.out.println("This room contains an item.");
+            System.out.println(currentRoom.getItem());
+            }
+        } else {
+            System.out.println("This room does not contain an item.");
+        }
+   }
     
-    private void pickUp()
-    {
-        System.out.println("You have picked up the item!");
-    }
+   private void pickUp()
+   {
+        if(currentRoom.getItem() != null)
+        {
+            System.out.println("You have picked up the item.");
+            System.out.println(currentRoom.getItem() + " has been added to your inventory.");
+        } else {
+            System.out.println("This room does not contain an item.");
+        }
+   }
+   
+   private void goBack()
+   {
+       if(previousRoom == null) {
+           System.out.println("You have nowhere to go back to.");
+       } else {
+           currentRoom = roomHistory.pop();
+           System.out.println(currentRoom.getLongDescription());
+       }
+   }
 }
