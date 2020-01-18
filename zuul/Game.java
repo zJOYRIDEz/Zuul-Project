@@ -218,13 +218,6 @@ public class Game
         }
    }
    
-   private void enterRoom(Room nextRoom)
-   {
-       previousRoom = currentRoom;
-       currentRoom = nextRoom;
-       System.out.println(currentRoom.getLongDescription());
-   }
-   
    private void goBack()
    {
        if(previousRoom == null) {
