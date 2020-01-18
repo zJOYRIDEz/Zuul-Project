@@ -1,7 +1,7 @@
 #BlueJ class context
 comment0.target=Item
-comment1.params=itemName\ itemDescription\ itemWeight
-comment1.target=Item(java.lang.String,\ java.lang.String,\ int)
+comment1.params=itemName\ itemDescription\ itemWeight\ itemDamage
+comment1.target=Item(java.lang.String,\ java.lang.String,\ int,\ int)
 comment1.text=\r\n\ Maak\ een\ nieuwe\ item\ met\ een\ description\ en\ weight\r\n
 comment2.params=
 comment2.target=java.lang.String\ getShortItemDescription()

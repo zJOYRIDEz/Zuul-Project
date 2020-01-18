@@ -8,15 +8,17 @@ public class Item
     private String itemName;
     private String itemDescription;
     private int weight;
+    private int itemDamage;
     
     /**
      * Maak een nieuwe item met een description en weight
      */
-    public Item(String itemName, String itemDescription, int itemWeight)
+    public Item(String itemName, String itemDescription, int itemWeight, int itemDamage)
     {   
         this.itemName = itemName;
         this.itemDescription = itemDescription;
-        weight = itemWeight;
+        this.weight = itemWeight;
+        this.itemDamage = itemDamage;
     }
     
     public String getShortItemDescription()
@@ -31,6 +33,6 @@ public class Item
     
     public String toString()
     {
-        return "Item: " + itemName + "\n" + "Description: " + itemDescription + "\n" + "Weight: " + weight;
+        return "Item: " + itemName + "\n" + "Description: " + itemDescription + "\n" + "Weight: " + weight + "\n" + "Damage: "+ itemDamage;
     }
 }
