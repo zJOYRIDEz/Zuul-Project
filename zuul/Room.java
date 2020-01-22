@@ -1,7 +1,4 @@
-import java.util.HashMap;
-import java.util.Set;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
 /**
  * Class Room - a room in an adventure game.
  *
@@ -18,9 +15,11 @@ import java.util.Iterator;
  */
 public class Room 
 {
+    private Item item;
     private String description;
     private HashMap<String, Room> exits;
-    private HashMap<Item, Room> items;
+    private HashMap<String, Item> items;
+    //private HashMap<Item, Room> itemLocations;
     /**
      * Create a room
      */
@@ -28,7 +27,7 @@ public class Room
     {
         this.description = description;
         exits = new HashMap<>();
-        items = new HashMap<>();
+        items = new HashMap<String, Item>();
     }
     
     /**
@@ -43,25 +42,40 @@ public class Room
     /**
      * Define the item and where it is on the map
      */
-    public void setItem(Item item, Room container)
+    
+    //public void setItem(Item item, Room container)
+    //{
+    //    itemLocations.put(item, container);
+    //}
+    
+    public void addItem(String itemName, String description, int itemWeight)
     {
-        items.put(item, container);
+        Set<String> keys = items.keySet();
+        for(String item : keys)
+            if(item.equals(itemName))
+                return;
+        
+        Item newItem = new Item(description, itemName, itemWeight);
+        items.put(itemName, newItem);
     }
     
     /**
      * Get the information about an item.
      */
-    public String getItem()
+    public String getItemString()
     {
-        String itemString = null;
-        Set<Item> keys = items.keySet();
-        for(Item items : keys)
-        {
-            itemString =items + " ";
-        }
-        return itemString;
+        String returnString = "Items:";
+        Set<String> keys = items.keySet();
+        for(String item : keys)
+            returnString += " " + item;
+        return returnString;
     }
-   
+    
+    public Item getItem(String name)
+    {
+        return items.get(name);
+    }
+    
     /**
      * @return The description of the room.
      */
@@ -72,7 +86,7 @@ public class Room
     
     public String getLongDescription()
     {
-        return "You are " + description + "\n" + getExitString();
+        return "You are " + description + "\n" + getExitString() + "\n" + getItemString();
     }
 
     public Room getExit(String direction)
@@ -94,5 +108,20 @@ public class Room
             returnString += " " + exit;
         }
         return returnString;
+    }
+    
+    public Item delItem(String name)
+    {
+        Set<String> keys = items.keySet();
+        for(String item : keys) {
+            if (item.equals(name))
+            {
+                Item temp = items.get(name);
+                items.remove(name);
+                return temp;
+            }            
+        }
+        System.out.println("That isn't here.");
+        return null;
     }
 }

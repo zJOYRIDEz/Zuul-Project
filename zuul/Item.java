@@ -1,38 +1,32 @@
-import java.util.Set;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.ArrayList;
-
 public class Item
 {
-    private String itemName;
-    private String itemDescription;
+    private String description;
+    private String name;
     private int weight;
-    private int itemDamage;
-    
     /**
-     * Maak een nieuwe item met een description en weight
+     * Constructor for objects of class Item
      */
-    public Item(String itemName, String itemDescription, int itemWeight, int itemDamage)
-    {   
-        this.itemName = itemName;
-        this.itemDescription = itemDescription;
-        this.weight = itemWeight;
-        this.itemDamage = itemDamage;
+    public Item(String description, String name, int weight)
+    {
+        // initialise instance variables
+        this.description = description;
+        this.name = name;
+        this.weight = weight;
+    }
+
+
+    public String getDescription()
+    {
+        return description;
     }
     
-    public String getShortItemDescription()
+    public String getName()
     {
-        return itemDescription;
+        return name;
     }
     
-    public int weight()
+    public int getWeight()
     {
-        return weight;
-    }
-    
-    public String toString()
-    {
-        return "Item: " + itemName + "\n" + "Description: " + itemDescription + "\n" + "Weight: " + weight + "\n" + "Damage: "+ itemDamage;
+       return weight;
     }
 }
