@@ -1,4 +1,6 @@
     import java.util.*;
+    import java.util.InputMismatchException;
+    import java.util.Scanner;
     /**
      *  This class is the main class of the "World of Zuul" application. 
      *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -19,6 +21,7 @@
     public class Game 
         {
         private Parser parser;
+        private CommandWord commandWord;
         private Room previousRoom;
         private Stack<Room> roomHistory;
         private Room currentRoom;
@@ -35,6 +38,11 @@
            createRooms();
         }
         
+        public enum commandWord
+        {
+            GO, QUIT, HELP, UNKNOWN;
+        }
+        
         /**
          * Create all the rooms and link their exits together. Also create items
          */
@@ -44,7 +52,7 @@
            Item ironSword, woodenShield;
         
            //create the items
-           
+           ironSword = new Item("Iron Sword", "an old iron sword", 15);
            // create the rooms
            darkRoom = new Room("in a dark room, the air heavy with the stink of sewage");
            darkHallway = new Room("in a dark hallway, dimly lit by torches");
@@ -60,7 +68,7 @@
            // initialise room items
            
            //darkRoom.setItem(ironSword, darkRoom);
-           darkRoom.addItem("IronSword", "An old iron sword, it looks like it was used by a soldier.", 15);
+           darkRoom.addItem(ironSword);
            
            playerCommands.addInventory("flask", "a flask made of glass", 15);
            
@@ -114,8 +122,9 @@
                 System.out.println("I don't know what you mean...");
                 return false;
             }
-    
+            
             String commandWord = command.getCommandWord();
+    
             if (commandWord.equals("help")) {
                 printHelp();
             }
@@ -205,12 +214,12 @@
         
    private void look()
    {
-       System.out.println(currentRoom.getLongDescription());
-        if(currentRoom.getItemString() != null)
+      //System.out.println(currentRoom.getLongDescription());
+        if(currentRoom.getAllItems() != null)
         {
             {
                 System.out.println("This room contains an item.");
-                System.out.println(currentRoom.getItemString());
+                System.out.println(currentRoom.getAllItems());
             }
       } else {
           System.out.println("This room does not contain an item.");
@@ -267,12 +276,12 @@
         
         // Drop it
         
-        Item temp = playerCommands.dropInventory(droppedItem);
-        if (temp != null)
+        //Item temp = playerCommands.dropInventory(droppedItem);
+        if (droppedItem != null)
         {
             
             // Add it to the room's items
-            currentRoom.addItem(temp.getName(), temp.getDescription(), temp.getWeight());
+            //currentRoom.addItem(itemCommands.getName(), itemCommands.getDescription(), itemCommands.getWeight());
             
             // Refresh inventory
             System.out.println(currentRoom.getLongDescription());

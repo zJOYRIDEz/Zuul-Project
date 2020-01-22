@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.Iterator;
 /**
  * Class Room - a room in an adventure game.
  *
@@ -18,7 +19,8 @@ public class Room
     private Item item;
     private String description;
     private HashMap<String, Room> exits;
-    private HashMap<String, Item> items;
+    //private HashMap<String, Item> items;
+    private ArrayList<Item> items;
     //private HashMap<Item, Room> itemLocations;
     /**
      * Create a room
@@ -27,7 +29,8 @@ public class Room
     {
         this.description = description;
         exits = new HashMap<>();
-        items = new HashMap<String, Item>();
+        //items = new HashMap<String, Item>();
+        items = new ArrayList<>();
     }
     
     /**
@@ -48,32 +51,32 @@ public class Room
     //    itemLocations.put(item, container);
     //}
     
-    public void addItem(String itemName, String description, int itemWeight)
+    public void addItem(Item item)
     {
-        Set<String> keys = items.keySet();
-        for(String item : keys)
-            if(item.equals(itemName))
-                return;
-        
-        Item newItem = new Item(description, itemName, itemWeight);
-        items.put(itemName, newItem);
+        items.add(item);
     }
     
     /**
      * Get the information about an item.
      */
-    public String getItemString()
+    public void listItem(int index)
     {
-        String returnString = "Items:";
-        Set<String> keys = items.keySet();
-        for(String item : keys)
-            returnString += " " + item;
-        return returnString;
+        System.out.println("Item: " + items + ": ");
+        Item item = items.get(index);
+        System.out.println(item.getDescription());
     }
     
-    public Item getItem(String name)
+    public String getAllItems()
     {
-        return items.get(name);
+       Iterator<Item> it = items.iterator();
+       String returnString = "Items: ";
+       while(it.hasNext())
+       {
+           Item i = it.next();
+           String item = i.getDetails();
+           returnString = item + " ";
+       }
+       return returnString;
     }
     
     /**
@@ -86,7 +89,7 @@ public class Room
     
     public String getLongDescription()
     {
-        return "You are " + description + "\n" + getExitString() + "\n" + getItemString();
+        return "You are " + description + "\n" + getExitString() + "\n" + getAllItems();
     }
 
     public Room getExit(String direction)
@@ -112,16 +115,36 @@ public class Room
     
     public Item delItem(String name)
     {
-        Set<String> keys = items.keySet();
-        for(String item : keys) {
-            if (item.equals(name))
+        Iterator<Item> it = items.iterator();
+        while(it.hasNext())
+        {
+            Item i = it.next();
+            String item = i.getName();
+            if(item.equals(name))
             {
-                Item temp = items.get(name);
-                items.remove(name);
-                return temp;
-            }            
+                it.remove();
+            }
         }
-        System.out.println("That isn't here.");
         return null;
+    }
+    
+        private boolean indexValid(int index)
+        {
+        // The return value.
+        // Set according to whether the index is valid or not.
+        boolean valid;
+        
+        if(index < 0) {
+            System.out.println("Index cannot be negative: " + index);
+            valid = false;
+        }
+        else if(index >= items.size()) {
+            System.out.println("Index is too large: " + index);
+            valid = false;
+        }
+        else {
+            valid = true;
+        }
+        return valid;
     }
 }
