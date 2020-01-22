@@ -40,7 +40,7 @@
          */
         private void createRooms()
         {
-           Room darkRoom, darkHallway, diningRoom;
+           Room darkRoom, darkHallway, diningRoom, basement;
            Item ironSword, woodenShield;
         
            //create the items
@@ -49,20 +49,30 @@
            darkRoom = new Room("in a dark room, the air heavy with the stink of sewage");
            darkHallway = new Room("in a dark hallway, dimly lit by torches");
            diningRoom = new Room("in what appears to be some sort of dining room, as you hear footsteps approaching you scramble to find a hiding spot."); 
-          
+           basement = new Room("in a dirty, foul smelling basement");
            // initialise room exits
            darkRoom.setExit("north", darkHallway);
+           darkRoom.setExit("pull" , basement);
            darkRoom.setExit("darkhallway", darkHallway);
            darkRoom.setExit("diningroom", diningRoom);
-           
+       
+       
            darkHallway.setExit("north", diningRoom);
            darkHallway.setExit("south", darkRoom);
            darkHallway.setExit("darkroom", darkRoom);
            darkHallway.setExit("diningroom", diningRoom);
-           
+       
            diningRoom.setExit("south", darkHallway);
-           diningRoom.setExit("darkhallway", darkHallway);
+           diningRoom.setExit("check", basement);
            diningRoom.setExit("darkroom", darkRoom);
+           diningRoom.setExit("darkhallway", darkHallway);
+       
+           basement.setExit("up", darkRoom);
+           // initialise room items
+           
+          
+      
+        
            // initialise room items
            
            //darkRoom.setItem(ironSword, darkRoom);
