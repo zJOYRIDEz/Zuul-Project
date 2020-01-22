@@ -40,7 +40,7 @@
          */
         private void createRooms()
         {
-           Room darkRoom, darkHallway, diningRoom, basement;
+           Room darkRoom, darkHallway, diningRoom, basement, kitchen, garden, prison, gate;
            Item ironSword, woodenShield;
         
            //create the items
@@ -49,25 +49,81 @@
            darkRoom = new Room("in a dark room, the air heavy with the stink of sewage");
            darkHallway = new Room("in a dark hallway, dimly lit by torches");
            diningRoom = new Room("in what appears to be some sort of dining room, as you hear footsteps approaching you scramble to find a hiding spot."); 
-           basement = new Room("in a dirty, foul smelling basement");
+           basement = new Room("suddenly in a dirty, foul smelling basement");
+           kitchen = new Room("in what appears to be the kitchen");
+           garden = new Room("in a garden full of dead plants");
+           prison = new Room("in a cold, creepy prison");
+           gate = new Room("in front of an ominous gate, perhaps this is the exit");
+           
            // initialise room exits
            darkRoom.setExit("north", darkHallway);
+           darkRoom.setExit("east", prison);
            darkRoom.setExit("pull" , basement);
            darkRoom.setExit("darkhallway", darkHallway);
            darkRoom.setExit("diningroom", diningRoom);
+           darkRoom.setExit("prison", prison);
+           darkRoom.setExit("garden", garden);
+           darkRoom.setExit("kitchen", kitchen);
+           darkRoom.setExit("basement", basement);
        
-       
-           darkHallway.setExit("north", diningRoom);
-           darkHallway.setExit("south", darkRoom);
+           darkHallway.setExit("east", diningRoom);
+           darkHallway.setExit("west", darkRoom);
            darkHallway.setExit("darkroom", darkRoom);
            darkHallway.setExit("diningroom", diningRoom);
+           darkHallway.setExit("prison", prison);
+           darkHallway.setExit("garden", garden);
+           darkHallway.setExit("kitchen", kitchen);
+           darkHallway.setExit("basement", basement);
        
-           diningRoom.setExit("south", darkHallway);
+           diningRoom.setExit("west", darkHallway);
+           diningRoom.setExit("south", kitchen);
+           diningRoom.setExit("east", garden);
            diningRoom.setExit("check", basement);
            diningRoom.setExit("darkroom", darkRoom);
            diningRoom.setExit("darkhallway", darkHallway);
-       
+           diningRoom.setExit("prison", prison);
+           diningRoom.setExit("garden", garden);
+           diningRoom.setExit("kitchen", kitchen);
+           diningRoom.setExit("basement", basement);
+           
+           kitchen.setExit("north", diningRoom);
+           kitchen.setExit("east", garden);
+           kitchen.setExit("darkroom", darkRoom);
+           kitchen.setExit("darkhallway", darkHallway);
+           kitchen.setExit("diningroom", diningRoom);
+           kitchen.setExit("basement", basement);
+           kitchen.setExit("garden", garden);
+           kitchen.setExit("prison", prison);
+           
+           garden.setExit("north", diningRoom);
+           garden.setExit("east", gate);
+           garden.setExit("south", prison);
+           garden.setExit("west", kitchen);
+           garden.setExit("darkroom", darkRoom);
+           garden.setExit("darkhallway", darkHallway);
+           garden.setExit("diningroom", diningRoom);
+           garden.setExit("kitchen", kitchen);
+           garden.setExit("prison", prison);
+           garden.setExit("basement", basement);
+           
+           prison.setExit("north", garden);
+           prison.setExit("west", darkRoom);
+           prison.setExit("darkroom", darkRoom);
+           prison.setExit("darkhallway", darkHallway);
+           prison.setExit("diningroom", diningRoom);
+           prison.setExit("kitchen", kitchen);
+           prison.setExit("basement", basement);
+           prison.setExit("garden", garden);
+           
            basement.setExit("up", darkRoom);
+           basement.setExit("darkroom", darkRoom);
+           basement.setExit("darkhallway", darkHallway);
+           basement.setExit("diningroom", diningRoom);
+           basement.setExit("kitchen", kitchen);
+           basement.setExit("prison", prison);
+           basement.setExit("garden", garden);
+           
+           
            // initialise room items
            
           
@@ -84,7 +140,7 @@
            currentRoom = darkRoom;
         }
         
-    
+     
     
         /**
          *  Main play routine.  Loops until end of play.

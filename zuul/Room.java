@@ -37,6 +37,7 @@ public class Room
     public void setExit(String direction, Room neighbor) 
     {
         exits.put(direction, neighbor);
+   
     }
     
     /**
