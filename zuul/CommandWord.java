@@ -1,15 +1,54 @@
 /**
- * This class is part of the "World of Zuul" application. 
- * "World of Zuul" is a very simple, text based adventure game.  
+ * An enum of all valid commands
  * 
- * This class holds an enumeration of all command words known to the game.
- * It is used to recognise commands as they are typed in.
- *
- * @author  Michael Kölling and David J. Barnes
- * @version 2016.02.29
+ * 
+ * @author  Nick Anbergen
+ * @version 2020.1.22
  */
-
 public enum CommandWord
 {
-    GO, QUIT, HELP, LOOK, TAKE, DROP, BACK, INVENTORY,  UNKNOWN;
+    // A value for each command word along with its
+    // corresponding user interface string.
+    GO("go"), 
+
+    BACK("back"), 
+
+    LOOK("look"), 
+
+    TAKE("take"), 
+
+    DROP("drop"), 
+
+    INVENTORY("inventory"), 
+
+    QUIT("quit"), 
+
+    HELP("help"), 
+
+    UNKNOWN("?");
+    // The command string.
+    private String commandString;
+
+    /**
+     * @author Nick Anbergen
+     * @version 2020.1.22
+     * 
+     * Initialise with the corresponding command string.
+     * @param commandString The command string.
+     */
+    CommandWord(String commandString)
+    {
+        this.commandString = commandString;
+    }
+
+    /**
+     * @author Nick Anbergen
+     * @version 2020.1.22
+     * 
+     * @return The command word as a string.
+     */
+    public String toString()
+    {
+        return commandString;
+    }
 }

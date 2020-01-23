@@ -11,29 +11,32 @@ import java.util.Iterator;
  * east, south, west.  For each direction, the room stores a reference
  * to the neighboring room, or null if there is no exit in that direction.
  * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2016.02.29
+ * @author  Nick Anbergen
+ * @version 2020.1.23
  */
 public class Room 
 {
     private Item item;
     private String description;
     private HashMap<String, Room> exits;
-    //private HashMap<String, Item> items;
-    private ArrayList<Item> items;
-    //private HashMap<Item, Room> itemLocations;
+    public HashMap<String, Item> items;
     /**
+     * @author Nick Anbergen
+     * @version 2020.1.18
+     * 
      * Create a room
      */
     public Room(String description) 
     {
         this.description = description;
         exits = new HashMap<>();
-        //items = new HashMap<String, Item>();
-        items = new ArrayList<>();
+        items = new HashMap<String, Item>();
     }
-    
+
     /**
+     * @author Nick Anbergen
+     * @version 2020.1.18
+     * 
      * Define the exits of this room.  Every direction either leads
      * to another room or is null (no exit there).
      */
@@ -41,110 +44,110 @@ public class Room
     {
         exits.put(direction, neighbor);
     }
-    
+
     /**
-     * Define the item and where it is on the map
+     * @author Nick Anbergen
+     * @version 2020.18.1
+     * 
+     * Adds an item to the specified room, this item has a name, description and weight
+     * in unspecified units.
      */
-    
-    //public void setItem(Item item, Room container)
-    //{
-    //    itemLocations.put(item, container);
-    //}
-    
-    public void addItem(Item item)
+    public void addItem(String itemName, String description, int itemWeight)
     {
-        items.add(item);
+        Set<String> keys = items.keySet();
+        for(String item : keys)
+            if(item.equals(itemName))
+                return;
+
+        Item newItem = new Item(description, itemName, itemWeight);
+        items.put(itemName, newItem);
     }
-    
+
     /**
-     * Get the information about an item.
+     * @author Nick Anbergen
+     * @version 2020.1.18
+     * 
+     * @return the string for an item.
      */
-    public void listItem(int index)
+    public String getItemString()
     {
-        System.out.println("Item: " + items + ": ");
-        Item item = items.get(index);
-        System.out.println(item.getDescription());
+        String returnString = "Items:";
+        Set<String> keys = items.keySet();
+        for(String item : keys)
+            returnString += " " + item;
+        return returnString;
     }
-    
-    public String getAllItems()
-    {
-       Iterator<Item> it = items.iterator();
-       String returnString = "Items: ";
-       while(it.hasNext())
-       {
-           Item i = it.next();
-           String item = i.getDetails();
-           returnString = item + " ";
-       }
-       return returnString;
-    }
-    
+
     /**
-     * @return The description of the room.
+     * @author Nick Anbergen
+     * @version 2020.1.18
+     * 
+     * @return an item from the HashMap which equals the specified name
+     */
+    public Item getItem(String name)
+    {
+        return items.get(name);
+    }
+
+    /**
+     * @author Nick Anbergen
+     * @version 2020.1.18
+     * 
+     * @return the description of the room.
      */
     public String getDescription()
     {
         return description;
     }
-    
+
+    /**
+     * @author Nick Anbergen
+     * @version 2020.1.18
+     * 
+     * @return the description of a room, together with its exits and items
+     */
     public String getLongDescription()
     {
-        return "You are " + description + "\n" + getExitString() + "\n" + getAllItems();
+        return "You are " + description + "\n" + getExitString() + "\n" + getItemString();
     }
 
+    /**
+     * @author Nick Anbergen
+     * @version 2020.1.18
+     * 
+     * @return the exit directions of a room
+     */
     public Room getExit(String direction)
     {
         return exits.get(direction);
     }
-    
+
     /**
-     * Retourneer een string met daarin de uitgangen van de ruimte.
-     * Bijvoorbeeld: "Exits: north west"
-     * @return Een omschrijving van de aanwezige uitgangen in de ruimte
+     * @author Nick Anbergen
+     * @version 2020.1.18
+     * returns a String containing the exits of a room
+     * For Example: "Exits: north west"
+     * @return A description of the existing exits of a room
      */
     public String getExitString()
     {
-     String returnString = "Exits:";
-     Set<String> keys = exits.keySet();
-     for(String exit : keys)
+        String returnString = "Exits:";
+        Set<String> keys = exits.keySet();
+        for(String exit : keys)
         {
             returnString += " " + exit;
         }
         return returnString;
     }
-    
-    public Item delItem(String name)
+
+    /**
+     * @author Nick Anbergen
+     * @version 2020.1.23
+     * 
+     * Deletes the item that corresponds to the entered String at Game.takeItem()
+     */
+    public void delItem(String name)
     {
-        Iterator<Item> it = items.iterator();
-        while(it.hasNext())
-        {
-            Item i = it.next();
-            String item = i.getName();
-            if(item.equals(name))
-            {
-                it.remove();
-            }
-        }
-        return null;
-    }
-    
-        private boolean indexValid(int index)
-        {
-        // The return value.
-        // Set according to whether the index is valid or not.
-        boolean valid;
-        
-        if(index < 0) {
-            System.out.println("Index cannot be negative: " + index);
-            valid = false;
-        }
-        else if(index >= items.size()) {
-            System.out.println("Index is too large: " + index);
-            valid = false;
-        }
-        else {
-            valid = true;
-        }
-        return valid;
+        items.remove(name);
     }
 }

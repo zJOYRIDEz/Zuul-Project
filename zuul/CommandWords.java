@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 /**
  * This class is part of the "World of Zuul" application. 
  * "World of Zuul" is a very simple, text based adventure game.  
@@ -5,24 +7,65 @@
  * This class holds an enumeration of all command words known to the game.
  * It is used to recognise commands as they are typed in.
  *
- * @author  Michael Kölling and David J. Barnes
- * @version 2016.02.29
+ * @author  Nick Anbergen
+ * @version 2020.1.22
  */
 
 public class CommandWords
 {
-    // a constant array that holds all valid command words
-    private static final String[] validCommands = {
-        "go", "quit", "help", "look", "take", "drop", "back", "inventory"
-    };
-    
+    private HashMap<String, CommandWord> validCommands;
 
     /**
+     * @author Nick Anbergen
+     * @version 2020.1.22
+     * 
      * Constructor - initialise the command words.
      */
     public CommandWords()
     {
-        // nothing to do at the moment...
+        validCommands = new HashMap<>();
+
+        validCommands.put("help", CommandWord.HELP);
+
+        validCommands.put("go", CommandWord.GO);
+        validCommands.put("ga", CommandWord.GO);
+
+        validCommands.put("quit", CommandWord.QUIT);
+        validCommands.put("stop", CommandWord.QUIT);
+
+        validCommands.put("look", CommandWord.LOOK);
+        validCommands.put("kijk", CommandWord.LOOK);
+
+        validCommands.put("back", CommandWord.BACK);
+        validCommands.put("terug", CommandWord.BACK);
+
+        validCommands.put("inventory", CommandWord.INVENTORY);
+        validCommands.put("rugzak", CommandWord.INVENTORY);
+
+        validCommands.put("take", CommandWord.TAKE);
+        validCommands.put("neem", CommandWord.TAKE);
+
+        validCommands.put("drop", CommandWord.DROP);
+        validCommands.put("wegleggen", CommandWord.DROP);
+
+        validCommands.put("?", CommandWord.UNKNOWN);
+    }
+
+    /**
+     * @author Nick Anbergen
+     * @version 2020.1.22
+     * 
+     * @return the CommandWord from CommandWord
+     */
+    public CommandWord getCommandWord(String commandWord)
+    {
+        CommandWord command = validCommands.get(commandWord);
+        if (command != null) 
+        {
+            return command;
+        } else {
+            return CommandWord.UNKNOWN;
+        }
     }
 
     /**
@@ -32,19 +75,21 @@ public class CommandWords
      */
     public boolean isCommand(String aString)
     {
-        for(int i = 0; i < validCommands.length; i++) {
-            if(validCommands[i].equals(aString))
-                return true;
-        }
-        // if we get here, the string was not found in the commands
-        return false;
+        return validCommands.containsKey(aString);
     }
-    
+
+    /**
+     * @author Nick Anbergen
+     * @version 2020.1.18
+     * 
+     * Prints all the items in the validCommands HashMap, thus displaying an accurate list of
+     * all available, valid commands
+     */
     public void showAll()
     {
-        for(String command : validCommands)
+        for(String command : validCommands.keySet())
         {
-            System.out.print(command + " ");
+            System.out.println(command);
         }
         System.out.println();
     }

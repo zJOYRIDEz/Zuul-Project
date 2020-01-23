@@ -1,4 +1,10 @@
 #BlueJ class context
 comment0.target=CommandWord
-comment0.text=\r\n\ This\ class\ is\ part\ of\ the\ "World\ of\ Zuul"\ application.\ \r\n\ "World\ of\ Zuul"\ is\ a\ very\ simple,\ text\ based\ adventure\ game.\ \ \r\n\ \r\n\ This\ class\ holds\ an\ enumeration\ of\ all\ command\ words\ known\ to\ the\ game.\r\n\ It\ is\ used\ to\ recognise\ commands\ as\ they\ are\ typed\ in.\r\n\r\n\ @author\ \ Michael\ K\u00F6lling\ and\ David\ J.\ Barnes\r\n\ @version\ 2016.02.29\r\n
-numComments=1
+comment0.text=\r\n\ An\ enum\ of\ all\ valid\ commands\r\n\ \r\n\ \r\n\ @author\ \ Nick\ Anbergen\r\n\ @version\ 2020.1.22\r\n
+comment1.params=commandString
+comment1.target=CommandWord(java.lang.String)
+comment1.text=\r\n\ @author\ Nick\ Anbergen\r\n\ @version\ 2020.1.22\r\n\ \r\n\ Initialise\ with\ the\ corresponding\ command\ string.\r\n\ @param\ commandString\ The\ command\ string.\r\n
+comment2.params=
+comment2.target=java.lang.String\ toString()
+comment2.text=\r\n\ @author\ Nick\ Anbergen\r\n\ @version\ 2020.1.22\r\n\ \r\n\ @return\ The\ command\ word\ as\ a\ string.\r\n
+numComments=3
