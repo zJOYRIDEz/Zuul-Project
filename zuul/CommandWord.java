@@ -11,6 +11,8 @@ public enum CommandWord
     // corresponding user interface string.
     GO("go"),
     
+    TELEPORT("teleport"),
+    
     NORTH("north"),
 
     BACK("back"), 

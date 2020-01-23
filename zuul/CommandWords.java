@@ -16,7 +16,7 @@ public class CommandWords
     private HashMap<String, CommandWord> validCommands;
 
     /**
-     * @author Nick Anbergen
+     * @author Nick Anbergen, Jesse Kroes
      * @version 2020.1.22
      * 
      * Constructor - initialise the command words.
@@ -32,6 +32,9 @@ public class CommandWords
 
         validCommands.put("quit", CommandWord.QUIT);
         validCommands.put("stop", CommandWord.QUIT);
+        
+        validCommands.put("teleport", CommandWord.TELEPORT);
+        validCommands.put("teleporteer", CommandWord.TELEPORT);
 
         validCommands.put("look", CommandWord.LOOK);
         validCommands.put("kijk", CommandWord.LOOK);

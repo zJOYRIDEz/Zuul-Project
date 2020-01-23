@@ -36,33 +36,118 @@ public class Game
         roomHistory =  new Stack<Room>();
         createRooms();
     }
-
+    
     /**
+     * @author Jesse Kroes
+     * @version 2020.1.22
+     * make the game playable without bluej
+     */
+     public static void main(String[] args) {
+        Game game = new Game();
+        game.play();
+    }
+    
+    /**
+     * @author Jesse Kroes
+     * @version 2020.1.22
      * Create all the rooms and link their exits together. Also create items
      */
     private void createRooms()
     {
-        Room darkRoom, darkHallway, diningRoom;
+        Room darkRoom, darkHallway, diningRoom, basement, kitchen, garden, prison, gate;
         
         // create the rooms
-        darkRoom = new Room("in a dark room, the air heavy with the stink of sewage");
+        darkRoom = new Room("in a dark room, the air heavy with the stink of sewage. \n There is a lever here, you wonder what it could activate");
         darkHallway = new Room("in a dark hallway, dimly lit by torches");
-        diningRoom = new Room("in what appears to be some sort of dining room"); 
-
+        diningRoom = new Room("in what appears to be some sort of dining room \n Your eyes wander to something shiny lying on the carpet, perhaps you should check it."); 
+        basement = new Room("suddenly in a dirty, foul smelling basement");
+        kitchen = new Room("in what appears to be the kitchen");
+        garden = new Room("in a garden full of dead plants");
+        prison = new Room("in a cold, creepy prison");
+        gate = new Room("in front of an ominous gate, perhaps this is the exit");
+        
         // initialise room exits
         darkRoom.setExit("north", darkHallway);
-
-        darkHallway.setExit("north", diningRoom);
-        darkHallway.setExit("south", darkRoom);
-
-        diningRoom.setExit("south", darkHallway);
+        darkRoom.setExit("east", prison);
+        darkRoom.setExit("pull" , basement);
+        darkRoom.setExit("darkhallway", darkHallway);
+        darkRoom.setExit("diningroom", diningRoom);
+        darkRoom.setExit("prison", prison);
+        darkRoom.setExit("garden", garden);
+        darkRoom.setExit("kitchen", kitchen);
+        darkRoom.setExit("basement", basement);
+       
+        darkHallway.setExit("east", diningRoom);
+        darkHallway.setExit("west", darkRoom);
+        darkHallway.setExit("darkroom", darkRoom);
+        darkHallway.setExit("diningroom", diningRoom);
+        darkHallway.setExit("prison", prison);
+        darkHallway.setExit("garden", garden);
+        darkHallway.setExit("kitchen", kitchen);
+        darkHallway.setExit("basement", basement);
+       
+        diningRoom.setExit("west", darkHallway);
+        diningRoom.setExit("south", kitchen);
+        diningRoom.setExit("east", garden);
+        diningRoom.setExit("check", basement);
+        diningRoom.setExit("darkroom", darkRoom);
+        diningRoom.setExit("darkhallway", darkHallway);
+        diningRoom.setExit("prison", prison);
+        diningRoom.setExit("garden", garden);
+        diningRoom.setExit("kitchen", kitchen);
+        diningRoom.setExit("basement", basement);
+           
+        kitchen.setExit("north", diningRoom);
+        kitchen.setExit("east", garden);
+        kitchen.setExit("darkroom", darkRoom);
+        kitchen.setExit("darkhallway", darkHallway);
+        kitchen.setExit("diningroom", diningRoom);
+        kitchen.setExit("basement", basement);
+        kitchen.setExit("garden", garden);
+        kitchen.setExit("prison", prison);
+           
+        garden.setExit("north", diningRoom);
+        garden.setExit("east", gate);
+        garden.setExit("south", prison);
+        garden.setExit("west", kitchen);
+        garden.setExit("darkroom", darkRoom);
+        garden.setExit("darkhallway", darkHallway);
+        garden.setExit("diningroom", diningRoom);
+        garden.setExit("kitchen", kitchen);
+        garden.setExit("prison", prison);
+        garden.setExit("basement", basement);
+           
+        prison.setExit("north", garden);
+        prison.setExit("west", darkRoom);
+        prison.setExit("darkroom", darkRoom);
+        prison.setExit("darkhallway", darkHallway);
+        prison.setExit("diningroom", diningRoom);
+        prison.setExit("kitchen", kitchen);
+        prison.setExit("basement", basement);
+        prison.setExit("garden", garden);
+           
+        basement.setExit("up", darkRoom);
+        basement.setExit("darkroom", darkRoom);
+        basement.setExit("darkhallway", darkHallway);
+        basement.setExit("diningroom", diningRoom);
+        basement.setExit("kitchen", kitchen);
+        basement.setExit("prison", prison);
+        basement.setExit("garden", garden);
         
         // initialise room items
-        darkRoom.addItem("note1", "I bet you don't know what's going on now do you? \nWell, not to worry, I've got you covered. \nIn here, I have scattered notes for you to find, it will explain who you are and why you are here. \nGood luck",1);
+        darkRoom.addItem("Note1", " I am writing these notes to keep track of the events unfolding from this point. \n I am the butler of this place; \n This morning when I headed out to buy groceries, we found all the doors of the castle locked, \n we tried to unlock them, but our attempts were futile, \n we are currently all gathered in the dining room thinking about what to do next. \n God help us.",1);
         
-        darkHallway.addItem("note2", "You see, there is something peculiar about seeing someone traverse an unknown space. \nSometimes they actually explore. \nSometimes they stay put. \nSomething I've learned over the years is that humans truly are unpredictable when isolated", 1);
+        darkHallway.addItem("Note2", " After 5 days we still haven’t been saved, why is it taking them so long? \n Someone has surely alerted the police, right? \n Each day I lose a little bit of hope, if this continues, we won't last long. \n We will not have enough food for another week.", 1);
         
-        diningRoom.addItem("note3", "When I found you, there really didn't seem to be much special about you. \nBut the more I observed you, the more I became convinced you were the real deal.", 1);
+        diningRoom.addItem("Note3", " Today we gave away the last bit of rations. \n All the food is completely gone, all our bread is gone, we only have a little bit of water left. \n I hope we survive this, but I have little hope. ", 1);
+        
+        kitchen.addItem("Note4" ," Tensions are rising, everyone is accusing one another for being the person behind all of this. \n They have even gone as far to jail one of the stable boys. \n If we don’t get saved soon, I fear it will be an all-out war in here. ", 1);
+        
+        basement.addItem("Note5" ," Everyone snapped, they all started attacking each other, I am currently hiding. \n I don’t think I will survive this. If someone reads this, please tell my family I love them. \n I fear for my live ", 1);
+        
+        prison.addItem("Note6" ," The note is covered with dirt and blood, you can barely make out what it says: \n H E L P ", 1);
+        
+        
         
         previousRoom = darkRoom; // sets the previous room
         currentRoom = darkRoom;
@@ -100,6 +185,7 @@ public class Game
     }
 
     /**
+     * @author Nick Anbergen, Jesse Kroes
      * Given a command, process (that is: execute) the command.
      * @param command The command to be processed.
      * @return true If the command ends the game, false otherwise.
@@ -146,6 +232,9 @@ public class Game
             break;
             case INVENTORY:
             checkInventory();
+            break;
+            case TELEPORT:
+            teleportRoom(command);
             break;
         }
 
@@ -194,7 +283,34 @@ public class Game
             System.out.println(currentRoom.getLongDescription());
         }
     }
-
+        
+    /** 
+         *@author Jesse Kroes
+         *@version 2020.1.20
+         * Try to teleport to another room. If it is possible, enter
+         * the new room, otherwise print an error message.
+         */
+        private void teleportRoom(Command command)
+       {
+       if(!command.hasSecondWord()){
+         System.out.println("Teleport to where?");
+         return;
+        }
+        
+        String direction = command.getSecondWord();
+        
+        Room nextRoom = currentRoom.getExit(direction);
+        
+        if (!roomHistory.contains(nextRoom)) {
+            System.out.println("You can't teleport to that location right now!");
+        } 
+        else{
+         roomHistory.push(currentRoom);
+         currentRoom = nextRoom;
+         System.out.println(currentRoom.getTeleportInfo());
+        }
+    }
+    
     /** 
      * "Quit" was entered. Check the rest of the command to see
      * whether we really quit the game.

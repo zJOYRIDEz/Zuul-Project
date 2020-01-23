@@ -11,13 +11,14 @@ import java.util.Iterator;
  * east, south, west.  For each direction, the room stores a reference
  * to the neighboring room, or null if there is no exit in that direction.
  * 
- * @author  Nick Anbergen
+ * @author  Nick Anbergen, Jesse Kroes
  * @version 2020.1.23
  */
 public class Room 
 {
     private Item item;
     private String description;
+    private Room currentRoom;
     private HashMap<String, Room> exits;
     private HashMap<String, Item> items;
     /**
@@ -110,7 +111,16 @@ public class Room
     {
         return "You are " + description + "\n" + getExitString() + "\n" + getItemString();
     }
-
+    
+    /**
+     * @author Jesse Kroes
+     * @version 2020.1.22
+     */
+    public String getTeleportInfo()
+    {
+       return "After teleporting you find yourself " + description;   
+    }
+    
     /**
      * @author Nick Anbergen
      * @version 2020.1.18
