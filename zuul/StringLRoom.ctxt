@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=StringLRoom
+comment0.text=\r\n\ class\ StringLRoom\ -\ geef\ hier\ een\ beschrijving\ van\ deze\ class\r\n\r\n\ @author\ Nick\ Anbergen\r\n\ @version\ 2020.1.23\r\n
+comment1.params=
+comment1.target=StringLRoom()
+comment2.params=name\ language
+comment2.target=java.lang.String\ getInfo(java.lang.String,\ Language)
+comment3.params=name
+comment3.target=java.lang.String\ getString(java.lang.String)
+numComments=4

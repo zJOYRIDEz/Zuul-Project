@@ -1,7 +1,7 @@
-Project: zuul-bad
-Authors: Michael Kölling and David J. Barnes
+Project: zuul
+Authors: Nick Anbergen and Jesse Kroes
 
-This project is part of the material for the book
+This is our project for our java classes using the book
 
    Objects First with Java - A Practical Introduction using BlueJ
    Sixth edition

@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.target=Language
+comment0.text=\r\n\ class\ Language\ -\ geef\ hier\ een\ beschrijving\ van\ deze\ class\r\n\r\n\ @author\ Nick\ Anbergen\r\n\ @version\ 2020.1.23\r\n
+comment1.params=language
+comment1.target=Language(java.lang.String)
+comment2.params=
+comment2.target=java.lang.String\ toString()
+numComments=3

@@ -23,12 +23,15 @@ public class Game
     private Stack<Room> roomHistory;
     private Room currentRoom;
     private Player playerCommands;
+    private StringLRoom stringL;
+    private Language language;
     /**
      * Create the game and initialise its internal map.
      */
     public Game() 
     {
-        playerCommands = new Player(100, 0);
+        playerCommands = new Player(3, 0);
+        stringL = new StringLRoom();
         parser = new Parser();
         roomHistory =  new Stack<Room>();
         createRooms();
@@ -40,14 +43,11 @@ public class Game
     private void createRooms()
     {
         Room darkRoom, darkHallway, diningRoom;
-        Item ironSword;
-
-        //create the items
-
+        
         // create the rooms
         darkRoom = new Room("in a dark room, the air heavy with the stink of sewage");
         darkHallway = new Room("in a dark hallway, dimly lit by torches");
-        diningRoom = new Room("in what appears to be some sort of dining room, as you hear footsteps approaching you scramble to find a hiding spot."); 
+        diningRoom = new Room("in what appears to be some sort of dining room"); 
 
         // initialise room exits
         darkRoom.setExit("north", darkHallway);
@@ -56,12 +56,14 @@ public class Game
         darkHallway.setExit("south", darkRoom);
 
         diningRoom.setExit("south", darkHallway);
+        
         // initialise room items
-
-        //darkRoom.setItem(ironSword, darkRoom);
-        darkRoom.addItem("IronSword", "An old iron sword, it looks like it was used by a soldier.", 95);
-        darkRoom.addItem("Flask", "a flask made from glass", 5);
-
+        darkRoom.addItem("note1", "I bet you don't know what's going on now do you? \nWell, not to worry, I've got you covered. \nIn here, I have scattered notes for you to find, it will explain who you are and why you are here. \nGood luck",1);
+        
+        darkHallway.addItem("note2", "You see, there is something peculiar about seeing someone traverse an unknown space. \nSometimes they actually explore. \nSometimes they stay put. \nSomething I've learned over the years is that humans truly are unpredictable when isolated", 1);
+        
+        diningRoom.addItem("note3", "When I found you, there really didn't seem to be much special about you. \nBut the more I observed you, the more I became convinced you were the real deal.", 1);
+        
         previousRoom = darkRoom; // sets the previous room
         currentRoom = darkRoom;
     }
@@ -81,7 +83,7 @@ public class Game
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
-        System.out.println("Thank you for playing.  Good bye.");
+        System.out.println("Thank you for playing, goodbye!");
     }
 
     /**
@@ -129,6 +131,9 @@ public class Game
             break;
             case LOOK:
             look();
+            break;
+            case EXAMINE:
+            examine(command);
             break;
             case TAKE:
             takeItem(command);
@@ -296,7 +301,7 @@ public class Game
 
         String droppedItem = command.getSecondWord();
 
-        // Drop it
+        // Drop the speicified item
 
         Item temp = playerCommands.dropInventory(droppedItem);
         if (temp != null)
@@ -310,5 +315,25 @@ public class Game
             System.out.println(playerCommands.getInventoryString());
         }      
 
+    }
+
+    /**
+     * @author Nick Anbergen
+     * @version 2020.1.23
+     * 
+     * Calls the command Item.getExamineString, which returns all the information about an
+     * item including its name, description and weight.
+     */
+    private void examine(Command command)
+    {
+        if(!command.hasSecondWord())
+        {
+            System.out.println("Examine what?");
+            return;
+        }
+        
+        String itemToExamine = command.getSecondWord();
+        
+        System.out.println(playerCommands.getExamineString(itemToExamine));
     }
 }

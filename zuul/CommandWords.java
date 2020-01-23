@@ -47,6 +47,9 @@ public class CommandWords
 
         validCommands.put("drop", CommandWord.DROP);
         validCommands.put("wegleggen", CommandWord.DROP);
+        
+        validCommands.put("examine", CommandWord.EXAMINE);
+        validCommands.put("bekijk", CommandWord.EXAMINE);
 
         validCommands.put("?", CommandWord.UNKNOWN);
     }

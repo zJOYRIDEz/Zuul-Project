@@ -144,7 +144,7 @@ public class Player
         String returnString = "You examine the " + name + "\n";
         Item temp = inventory.get(name);
         if (temp != null) {
-            returnString += "It's " + temp.getDescription() + ".";
+            returnString +=temp.getDescription() + ".";
             return returnString;
         }
         return "You can only examine items in your inventory.";

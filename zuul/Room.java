@@ -19,7 +19,7 @@ public class Room
     private Item item;
     private String description;
     private HashMap<String, Room> exits;
-    public HashMap<String, Item> items;
+    private HashMap<String, Item> items;
     /**
      * @author Nick Anbergen
      * @version 2020.1.18
