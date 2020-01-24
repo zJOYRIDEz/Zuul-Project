@@ -28,31 +28,22 @@ public class CommandWords
         validCommands.put("help", CommandWord.HELP);
 
         validCommands.put("go", CommandWord.GO);
-        validCommands.put("ga", CommandWord.GO);
 
         validCommands.put("quit", CommandWord.QUIT);
-        validCommands.put("stop", CommandWord.QUIT);
         
         validCommands.put("teleport", CommandWord.TELEPORT);
-        validCommands.put("teleporteer", CommandWord.TELEPORT);
 
         validCommands.put("look", CommandWord.LOOK);
-        validCommands.put("kijk", CommandWord.LOOK);
-
+        
         validCommands.put("back", CommandWord.BACK);
-        validCommands.put("terug", CommandWord.BACK);
 
         validCommands.put("inventory", CommandWord.INVENTORY);
-        validCommands.put("rugzak", CommandWord.INVENTORY);
 
         validCommands.put("take", CommandWord.TAKE);
-        validCommands.put("neem", CommandWord.TAKE);
 
         validCommands.put("drop", CommandWord.DROP);
-        validCommands.put("wegleggen", CommandWord.DROP);
         
         validCommands.put("examine", CommandWord.EXAMINE);
-        validCommands.put("bekijk", CommandWord.EXAMINE);
 
         validCommands.put("?", CommandWord.UNKNOWN);
     }
