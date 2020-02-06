@@ -21,6 +21,7 @@ public class Game
     private Parser parser;
     private Room previousRoom;
     private Stack<Room> roomHistory;
+    private Stack<Room> visitedRoom;
     private Room currentRoom;
     private Player playerCommands;
     private StringLRoom stringL;
@@ -34,6 +35,7 @@ public class Game
         stringL = new StringLRoom();
         parser = new Parser();
         roomHistory =  new Stack<Room>();
+        visitedRoom = new Stack<Room>();
         createRooms();
     }
 
@@ -135,7 +137,6 @@ public class Game
 
         prison.addItem("note6" ," The note is covered with dirt and blood, you can barely make out what it says: \n H E L P ", 1);
 
-        
         previousRoom = darkRoom; // sets the previous room
         currentRoom = darkRoom;
     }
@@ -266,6 +267,7 @@ public class Game
             System.out.println("There is no door!");
         } else {
             roomHistory.push(currentRoom);
+            visitedRoom.push(currentRoom);
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
         }
@@ -284,16 +286,15 @@ public class Game
             return;
         }
 
-        String direction = command.getSecondWord();
+        String desiredRoom = command.getSecondWord();
 
-        Room nextRoom = currentRoom.getExit(direction);
+        //Room desiredRoom = new Room(currentRoom.getDescription());
 
-        if (!roomHistory.contains(nextRoom)) {
+        if (!visitedRoom.contains(desiredRoom)) {
             System.out.println("You can't teleport to that location right now!");
         } 
         else{
-            roomHistory.push(currentRoom);
-            currentRoom = nextRoom;
+            currentRoom = desiredRoom;
             System.out.println(currentRoom.getTeleportInfo());
         }
     }
@@ -341,10 +342,14 @@ public class Game
      */
     private void goBack()
     {
-        if(previousRoom == null) {
-            System.out.println("You have nowhere to go back to.");
-        } else {
-            currentRoom = roomHistory.pop();
+        if(roomHistory.empty()) 
+        {
+            System.out.println("You can't go back");
+        } 
+        else
+        {
+            currentRoom = roomHistory.peek();
+            roomHistory.pop();
             System.out.println(currentRoom.getLongDescription());
         }
     }
